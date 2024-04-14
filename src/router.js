@@ -14,7 +14,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/detail/:number",
+    path: "/detail/:owner/:repo/:number",
     element: (
       <Layout>
         <DetailPage />

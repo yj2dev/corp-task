@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  font-size: 1rem;
+  text-align: start;
+
   ul {
     margin: 0;
     padding: 0;
@@ -10,6 +13,7 @@ export const Container = styled.div`
       padding: 12px 0;
       list-style: none;
       border-bottom: 1px solid gray;
+      display: flex;
     }
 
     li:last-child {

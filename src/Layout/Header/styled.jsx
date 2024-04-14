@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  border: 1px solid red;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+
+  //    Q1. em과 px를 구분해서 쓰는 기준이 있나요?
+  //    A1.
 `;

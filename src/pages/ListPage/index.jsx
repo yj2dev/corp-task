@@ -14,28 +14,24 @@ const ListPage = () => {
   });
 
   const getIssue = async (owner, repo) => {
-    return await octokit.paginate(
+    const response = await octokit.paginate(
       `GET /repos/${owner}/${repo}/issues`,
-      {
-        owner: "github",
-        repo: "docs",
-        per_page: 10,
-      },
+      { per_page: 5 },
       (response, done) =>
         response.data.map((issue) => {
           done();
-
-          return issue;
 
           return {
             title: issue.title,
             number: issue.number,
             comments: issue.comments,
-            writer: issue.user.login,
+            writer: { name: issue.user.login },
             createdAt: dayjs(issue.created_at).format(`YYYY년 M월 D일`),
           };
         }),
     );
+
+    return response;
   };
 
   useEffect(() => {
@@ -56,14 +52,14 @@ const ListPage = () => {
           <li
             key={index}
             onClick={() => {
-              navigate(`/detail/${issue.number}`);
+              navigate(`/detail/facebook/react/${issue.number}`);
             }}
           >
             <span className="title">
               #{issue.number}&nbsp;{issue.title}
             </span>
             <span className="meta">
-              작성자:&nbsp;{issue.writer}, 작성일:&nbsp;{issue.createdAt}
+              작성자:&nbsp;{issue.writer.name}, 작성일:&nbsp;{issue.createdAt}
             </span>
             <span>코멘트:&nbsp;{issue.comments}</span>
           </li>
