@@ -19,11 +19,13 @@ const ListPage = () => {
       {
         owner: "github",
         repo: "docs",
-        per_page: 5,
+        per_page: 10,
       },
       (response, done) =>
         response.data.map((issue) => {
           done();
+
+          return issue;
 
           return {
             title: issue.title,

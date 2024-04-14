@@ -1,7 +1,11 @@
 import { Container } from "./styled";
 
-const Header = () => {
-  return <Container>Angular / Angular-cli</Container>;
+const Header = ({ owner, repo }) => {
+  return (
+    <Container>
+      {owner} / {repo}
+    </Container>
+  );
 };
 
 export default Header;
