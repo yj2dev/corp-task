@@ -1,5 +1,5 @@
 import { useInView } from "react-intersection-observer";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Summary from "../../components/Summary";
 import { Container } from "./styled";
 import { PulseLoader } from "react-spinners";
@@ -10,28 +10,23 @@ import { useIssueList } from "../../hooks/useIssueList";
 const ListPage = () => {
   const [list, runGetIssue, getMoreIssue, scrollLoading] = useIssueList();
   const [issueRef, issueViewRef] = useInView();
-  const [listCnt, setListCnt] = useState(10);
 
   useEffect(() => {
-    console.log(list);
-    runGetIssue("facebook", "react", listCnt);
-    console.log(list);
+    runGetIssue();
   }, []);
 
   useEffect(() => {
-    setListCnt((prev) => prev + 10);
-    // getMoreIssue("facebook", "react", listCnt);
-
     if (issueViewRef) {
+      getMoreIssue();
     }
   }, [issueViewRef]);
 
   return (
     <Container>
       <ul>
-        {/*{list?.map((issue, index) => (*/}
-        {/*  <Summary issue={issue} key={index} />*/}
-        {/*))}*/}
+        {list?.map((issue, index) => (
+          <Summary issue={issue} key={index} />
+        ))}
       </ul>
       <span className="infinity-scroll-ref" ref={issueRef}>
         {scrollLoading && (

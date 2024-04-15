@@ -2,12 +2,14 @@ import dayjs from "dayjs";
 // import { Octokit } from "octokit";
 import axios from "axios";
 
-export const getIssue = async (owner, repo, pageCnt) => {
+export const getIssue = async (owner, repo, pageCnt = 10) => {
   /*
     설명: 깃허브 이슈 목록을 요청하는 함수
     작성자: 이유진
     작성일: 2024.04.16 00:21
    */
+
+  console.log("pageCnt", pageCnt);
 
   return (
     axios
@@ -24,7 +26,6 @@ export const getIssue = async (owner, repo, pageCnt) => {
       //   Q2. 구조분해할당은 취향차이인가? 실서비스 운영중 안정성에 영향을 끼치지 않는가?
       //   A2.
       .then(({ data }) => {
-        console.log(data);
         return data.map((issue) => ({
           type: "post",
           title: issue.title,

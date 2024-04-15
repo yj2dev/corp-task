@@ -1,30 +1,26 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { getIssue } from "../network/request";
-import { useInView } from "react-intersection-observer";
 
 export const useIssueList = () => {
   const [list, setList] = useState([]);
+  const listCntRef = useRef(10);
   const [scrollLoading, setScrollLoading] = useState(false);
 
   const setAd = (issueData, index = 5) => {
-    issueData?.splice(index - 1, 0, { type: "ad" });
+    issueData.splice(index - 1, 0, { type: "ad" });
     return issueData;
   };
 
-  const getMoreIssue = async (owner, repo, listCnt) => {
+  const getMoreIssue = async () => {
     setScrollLoading(true);
-    await runGetIssue(owner, repo, listCnt);
+    listCntRef.current += 10;
+    await runGetIssue();
     setScrollLoading(false);
   };
 
-  const runGetIssue = async (owner, repo, listCnt) => {
-    let issueData = await getIssue(owner, repo, listCnt);
-    console.log(issueData);
-    console.log(typeof issueData);
-
+  const runGetIssue = async () => {
+    let issueData = await getIssue("facebook", "react", listCntRef.current);
     issueData = setAd(issueData);
-    console.log(issueData);
-    console.log(typeof issueData);
     setList(issueData);
   };
 
