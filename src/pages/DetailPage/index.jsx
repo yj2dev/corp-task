@@ -24,6 +24,7 @@ const DetailPage = () => {
     const issue = response.data;
 
     return {
+      type: "post",
       title: issue.title,
       content: issue.body,
       number: issue.number,

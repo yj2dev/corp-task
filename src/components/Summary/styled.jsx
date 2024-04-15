@@ -15,6 +15,16 @@ export const Container = styled.li`
     border-bottom: none;
   }
 
+  .ad {
+    width: 100%;
+
+    img {
+      width: 100%;
+      height: 64px;
+      object-fit: cover;
+    }
+  }
+
   span.title {
     p.meta {
       margin: 0;

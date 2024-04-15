@@ -8,4 +8,12 @@ export const Container = styled.div`
     margin: 0;
     padding: 0;
   }
+
+  span.infinity-scroll-ref {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+  }
 `;
