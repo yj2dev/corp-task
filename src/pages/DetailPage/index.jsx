@@ -1,8 +1,6 @@
 import { Container, LoadingContainer } from "./styled";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { Octokit } from "octokit";
-import dayjs from "dayjs";
+import { useEffect } from "react";
 import Markdown from "react-markdown";
 import { PulseLoader } from "react-spinners";
 import { IoArrowBack } from "react-icons/io5";
