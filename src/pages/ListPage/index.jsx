@@ -19,7 +19,7 @@ const ListPage = () => {
 
   const getIssue = async (owner, repo) => {
     const response = await octokit.paginate(
-      `GET /repos/${owner}/${repo}/issues`,
+      `GET /repos/${owner}/${repo}/issues?state=open&sort=comments`,
       { per_page: listCntRef.current },
       (response, done) =>
         response.data.map((issue) => {
@@ -75,7 +75,9 @@ const ListPage = () => {
         ))}
       </ul>
       <span className="infinity-scroll-ref" ref={issueRef}>
-        {scrollLoading && <PulseLoader />}
+        {scrollLoading && (
+          <PulseLoader size={12} style={{ margin: "12px 0" }} />
+        )}
       </span>
     </Container>
   );
