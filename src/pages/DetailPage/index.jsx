@@ -7,41 +7,16 @@ import Markdown from "react-markdown";
 import { PulseLoader } from "react-spinners";
 import { IoArrowBack } from "react-icons/io5";
 import Summary from "../../components/Summary";
+import { useDetailIssue } from "../../hooks/useDetailIssue";
 
 const DetailPage = () => {
   const { owner, repo, number } = useParams();
-  const [issue, setIssue] = useState(null);
   const navigate = useNavigate();
 
-  const octokit = new Octokit({
-    auth: process.env.REACT_APP_OCTOKIT_TOKEN,
-  });
-
-  const getDetailIssue = async (owner, repo, issueNumber) => {
-    const response = await octokit.request(
-      `GET /repos/${owner}/${repo}/issues/${issueNumber}`,
-    );
-    const issue = response.data;
-
-    return {
-      type: "post",
-      title: issue.title,
-      content: issue.body,
-      number: issue.number,
-      comments: issue.comments,
-      writer: { name: issue.user.login, profileUrl: issue.user.avatar_url },
-      createdAt: dayjs(issue.created_at).format(`YYYY년 M월 D일`),
-    };
-  };
+  const [issue, runGetDetailIssue] = useDetailIssue();
 
   useEffect(() => {
-    const runGetDetailIssue = async () => {
-      const issueData = await getDetailIssue(owner, repo, number);
-
-      setIssue(issueData);
-    };
-
-    runGetDetailIssue();
+    runGetDetailIssue(owner, repo, number);
   }, []);
 
   return (
