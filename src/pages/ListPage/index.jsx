@@ -2,11 +2,9 @@ import { Container } from "./styled";
 import { useEffect, useState } from "react";
 import { Octokit } from "octokit";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
+import Summary from "../../components/Summary";
 
 const ListPage = () => {
-  const navigate = useNavigate();
-
   const [list, setList] = useState([]);
 
   const octokit = new Octokit({
@@ -49,20 +47,7 @@ const ListPage = () => {
     <Container>
       <ul>
         {list?.map((issue, index) => (
-          <li
-            key={index}
-            onClick={() => {
-              navigate(`/detail/facebook/react/${issue.number}`);
-            }}
-          >
-            <span className="title">
-              #{issue.number}&nbsp;{issue.title}
-            </span>
-            <span className="meta">
-              작성자:&nbsp;{issue.writer.name}, 작성일:&nbsp;{issue.createdAt}
-            </span>
-            <span>코멘트:&nbsp;{issue.comments}</span>
-          </li>
+          <Summary issue={issue} key={index} />
         ))}
       </ul>
     </Container>

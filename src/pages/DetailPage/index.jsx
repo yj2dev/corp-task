@@ -1,13 +1,17 @@
-import { Container } from "./styled";
-import { useParams } from "react-router-dom";
+import { Container, LoadingContainer } from "./styled";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Octokit } from "octokit";
 import dayjs from "dayjs";
 import Markdown from "react-markdown";
+import { PulseLoader } from "react-spinners";
+import { IoArrowBack } from "react-icons/io5";
+import Summary from "../../components/Summary";
 
 const DetailPage = () => {
   const { owner, repo, number } = useParams();
   const [issue, setIssue] = useState(null);
+  const navigate = useNavigate();
 
   const octokit = new Octokit({
     auth: process.env.REACT_APP_OCTOKIT_TOKEN,
@@ -31,7 +35,7 @@ const DetailPage = () => {
 
   useEffect(() => {
     const runGetDetailIssue = async () => {
-      const issueData = await getDetailIssue("facebook", "react", number);
+      const issueData = await getDetailIssue(owner, repo, number);
 
       setIssue(issueData);
     };
@@ -41,12 +45,28 @@ const DetailPage = () => {
 
   return (
     <Container>
-      <article className="summary">
-        <img src={issue.writer.profileUrl} alt="이슈 작성자 프로필 이미지" />
-      </article>
-      <article className="content">
-        <Markdown>{issue?.content}</Markdown>
-      </article>
+      {issue ? (
+        <>
+          <button className="back-btn" onClick={() => navigate(-1)}>
+            <IoArrowBack />
+          </button>
+          <article className="summary">
+            <img
+              src={issue?.writer?.profileUrl}
+              alt="이슈 작성자 프로필 이미지"
+            />
+            <Summary issue={issue} />
+            <li></li>
+          </article>
+          <article className="content">
+            <Markdown>{issue?.content}</Markdown>
+          </article>
+        </>
+      ) : (
+        <LoadingContainer>
+          <PulseLoader color="#000" size={10} />
+        </LoadingContainer>
+      )}
     </Container>
   );
 };
