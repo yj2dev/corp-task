@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-// import { Octokit } from "octokit";
 import axios from "axios";
 
 export const getIssue = async (owner, repo, pageCnt = 10) => {
