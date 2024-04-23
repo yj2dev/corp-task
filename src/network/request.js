@@ -8,8 +8,6 @@ export const getIssue = async (owner, repo, pageCnt = 10) => {
     작성일: 2024.04.16 00:21
    */
 
-  console.log("pageCnt", pageCnt);
-
   return (
     axios
       .get(`https://api.github.com/repos/${owner}/${repo}/issues`, {
